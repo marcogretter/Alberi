@@ -1,0 +1,77 @@
+typedef struct Al{
+    int dato;
+    struct Al *right,*left;
+}Albero;
+
+typedef Albero *tree;
+
+int contaNodi(tree t)
+{
+    if(t==NULL)
+        return 0;
+    else
+        return 1+contaNodi(t->left)+contaNodi(t->right);
+}
+int CalcoloProfondita(tree t)
+{
+    if(t==NULL)
+        return 0;
+    int S,D;
+    S=CalcoloProfondita(t->left);
+    D=CalcoloProfondita(t->right);
+    
+    if(S>D)
+        return S+1;
+    return D+1;
+}
+tree TrovaElemento(tree t,int el)
+{
+    tree temp;
+    if(t==NULL)
+        return NULL;
+    if(t->dato==el)
+        return t;
+    temp=TrovaElemento(t->left,el);
+    if(temp==NULL)
+        return TrovaElemento(t->right,el);
+    else
+        return temp;
+}
+int contaNodiFoglia(tree t)
+{
+    if(t==NULL)
+        return 0;
+    if(t->left==NULL&&t->right==NULL)
+        return 1;
+    return contaNodi(t->right)+contaNodi(t->left);
+}
+int contaNodiNonFoglia(tree t)
+{
+    if(t==NULL)
+        return 0;
+    if(t->left==NULL&&t->right==NULL)
+        return 0;
+    return 1+contaNodiNonFoglia(t->left)+contaNodiNonFoglia(t->right);
+}
+int contoLivelliDispari(tree t,int level)
+{
+//    considerando pari il livello della matrice, la chiamata della funzione nel main è: int x=contoLivelliDispari(albero,0);
+    int n;
+    if(t==NULL)
+        return 0;
+    n=contoLivelliDispari(t->left,level+1)+contoLivelliDispari(t->right, level+1);
+    if(level%2!=0)
+        n++;
+    return n;
+}
+int contoLivelliPari(tree t)
+{
+    int n=1;
+    if(t==NULL)
+        return 0;
+    if(t->left!=NULL)
+        n+=contoLivelliPari(t->left->left)+contoLivelliPari(t->left->right);
+    if(t->right!=NULL)
+        n+=contoLivelliPari(t->right->right)+contoLivelliPari(t->right->left);
+    return n;
+}
