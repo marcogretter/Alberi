@@ -1,0 +1,41 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <math.h>
+#include <time.h>
+#define N 20
+
+typedef struct EL    {
+    int dato;
+    struct EL *left;
+    struct EL *right;
+} Node;
+
+typedef Node *tree;
+//dichiarazione funzioni:
+int verificaIsobato(tree t);
+int contaProfondita(tree t);
+//Sviluppo funzioni:
+int verificaIsobato(tree t)
+{
+    if(contaProfondita(t)==-1)
+        return 0;
+    return 1;
+}
+int contaProfondita(tree t)
+{
+    int s,d;
+    if(t==NULL)
+        return 1;
+    d=contaProfondita(t->right);
+    s=contaProfondita(t->left);
+    if(d==-1||s==-1)
+        return -1;
+    if(d==s)
+        return d+1;
+    if(d==0)
+        return s+1;
+    if(s==0)
+        return d+1;
+    return -1;//le due profondità sono diverse.
+}
