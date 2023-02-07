@@ -48,7 +48,7 @@ void aux(tree t,int n,int *v)
     if(t==NULL)
         return;
     if(t->dato%2==n%2)
-        v[n-1]=1;
+        v[n]=1;
     aux(t->right, n+1, v);
     aux(t->left, n+1, v);
 }
